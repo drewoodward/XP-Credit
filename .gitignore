@@ -1,0 +1,26 @@
+# Ignore Firebase service account key
+src/backend/flask_app/gamified-credit-firebase-adminsdk-fbsvc-497ccea0c6.json
+
+# Optionally, ignore any other JSON key files that might contain credentials
+*.key.json
+
+# Ignore environment variable files (if you use one to store sensitive info)
+.env
+
+# Python bytecode and cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Virtual environment directories
+venv/
+env/
+
+# OS generated files
+.DS_Store
+Thumbs.db

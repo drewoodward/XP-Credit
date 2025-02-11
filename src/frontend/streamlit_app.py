@@ -7,6 +7,7 @@ import requests
 API_URL = "http://127.0.0.1:5000"
 
 def get_credit_score(user_id):
+    #should be getting the score from the ai model
     response = requests.get(f"{API_URL}/credit_score?user_id={user_id}")
     if response.status_code == 200:
         return response.json().get("credit_score")
@@ -20,7 +21,7 @@ def main():
     if st.button("Get Credit Score"):
         if user_id:
             score = get_credit_score(user_id)
-            st.write(f"User {user_id} has a credit score of: {score}")
+            st.write(f"User {user_id} has a trust score of: {score}")
         else:
             st.error("Please enter a valid user ID.")
 
