@@ -5,6 +5,8 @@ Purpose:
 
 Technologies Used:
 
+# Dependencies
+
 # How to use
 1. In a virtual environment, download flask (pip install Flask)
 2. Let your machine know where the flask app directory is (export FLASK_APP=*path to the flask_app)
