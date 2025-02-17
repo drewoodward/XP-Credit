@@ -2,11 +2,12 @@ import streamlit as st
 import pandas as pd
 import requests
 import random
+import base64
 
 # Define your Flask API base URL
 API_URL = "http://127.0.0.1:5000"
 
-# Custom CSS for a colorful, vibrant look
+# Inject custom CSS for a colorful, vibrant look
 st.markdown("""
     <style>
         /* Overall background */
@@ -95,9 +96,23 @@ def get_trust_history(user_id):
             return df
     return None
 
+def get_badges(user_id):
+    """
+    Call the Flask API to get the badges earned by the user.
+    Expects a JSON response, for example: ["badges/badge1.png", "badges/badge2.png"]
+    If the endpoint is unavailable, returns a dummy list for demonstration.
+    """
+    try:
+        response = requests.get(f"{API_URL}/badges?user_id={user_id}")
+        if response.status_code == 200:
+            return response.json()  # Expecting a list of badge image URLs/paths
+    except Exception as e:
+        st.error(f"Error fetching badges: {e}")
+    # Dummy badges for testing
+    return ["badges/badge1.png"]
+
 # ---------------- User Login / Sign Up ----------------
 
-# Initialize session state for authentication if not already set
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 if "username" not in st.session_state:
@@ -151,8 +166,8 @@ def dashboard():
     st.write("Click the button below to log into your bank via Plaid (simulation).")
     if st.button("Link Bank Account"):
         st.success("Bank account linked successfully!")
-        # Simulate an AI model calculating a new trust score
-        new_trust_score = random.randint(600, 800)  # Dummy value; in a real app, this is computed based on bank data.
+        # Simulate AI model: compute new trust score (dummy value)
+        new_trust_score = random.randint(600, 800)
         update_result, update_status = update_trust_score(st.session_state.username, new_trust_score)
         if update_status == 200:
             st.success("Trust score updated!")
@@ -171,7 +186,49 @@ def dashboard():
             st.line_chart(df_history.set_index('timestamp')['trust_score'])
     else:
         st.write("No historical trust score data available.")
+    
+    # Convert the achievement image to a Base64 string
+    achievement_image_path = "badges/achievement-award.png"
+    try:
+        encoded_image = get_image_as_base64(achievement_image_path)
+    except Exception as e:
+        st.error(f"Error loading achievement image: {e}")
+        encoded_image = ""
+    
+    # Build the HTML for the header with the image embedded as Base64
+    image_html = f'<img src="data:image/png;base64,{encoded_image}" style="height: 50px; margin-left: 10px;">'
+    st.markdown(f"""
+        <div class='subheader' style='display: flex; align-items: center; justify-content: center;'>
+            Your Badges {image_html}
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Display badges for Saving Streak
+    badges = get_badges(st.session_state.username)
+    if badges:
+        cols = st.columns(len(badges))
+        for idx, col in enumerate(cols):
+            with col:
+                st.image(badges[idx], width=100)
+                st.markdown("<div style='color:#2980B9; font-size: 1em; font-weight: bold;'>Saving Streak, +5 Trust Score Points!</div>", unsafe_allow_html=True)
+    else:
+        st.write("No badges earned yet.")
+    
+    # Display badges for Course Completed
+    if badges:
+        cols = st.columns(len(badges))
+        for idx, col in enumerate(cols):
+            with col:
+                st.image(badges[idx], width=100)
+                st.markdown("<div style='color:#2980B9; font-size: 1em; font-weight: bold;'>Course Completed, +5 Trust Score Points!</div>", unsafe_allow_html=True)
+    else:
+        st.write("No course completion badges earned yet.")
 
+#helper function to print images
+def get_image_as_base64(image_path):
+    with open(image_path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
+    return encoded_string
 # ---------------- Main Application ----------------
 
 def main():
