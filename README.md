@@ -19,7 +19,7 @@ PyTorch (installation details depend on your system; see PyTorch.org)
 Other Python dependencies as listed in requirements.txt
 
 # How to use
-1. Set Up Environment:\n
+1. Set Up Environment: \n
     Create a virtual environment.\n
     Install dependencies using pip:\n
         pip install Flask\n
