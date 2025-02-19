@@ -19,21 +19,21 @@ PyTorch (installation details depend on your system; see PyTorch.org)
 Other Python dependencies as listed in requirements.txt
 
 # How to use
-1. Set Up Environment: \n
-    Create a virtual environment.\n
-    Install dependencies using pip:\n
-        pip install Flask\n
-        pip install firebase_admin\n
-        pip install streamlit\n
-2. Firebase Configuration:
+1. Set Up Environment: ->
+    Create a virtual environment.->
+    Install dependencies using pip:->
+        pip install Flask->
+        pip install firebase_admin->
+        pip install streamlit
+2. Firebase Configuration:->
     Create the JSON file for your Firebase credentials.
-3. Configure Flask:
-    Export your Flask app directory:
+3. Configure Flask:->
+    Export your Flask app directory:->
         export FLASK_APP=path/to/flask_app
-4. Run the Flask application:
+4. Run the Flask application:->
     flask run
-5 Launch Streamlit:
-    In a separate terminal, navigate to the directory containing your Streamlit app:
+5 Launch Streamlit:->
+    In a separate terminal, navigate to the directory containing your Streamlit app:->
         streamlit run streamlit_app.py
 6. Enter an email when prompted and open the provided URL in your browser.
 
