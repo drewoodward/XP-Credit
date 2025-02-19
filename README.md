@@ -19,12 +19,12 @@ PyTorch (installation details depend on your system; see PyTorch.org)
 Other Python dependencies as listed in requirements.txt
 
 # How to use
-1. Set Up Environment:
-    Create a virtual environment.
-    Install dependencies using pip:
-        pip install Flask
-        pip install firebase_admin
-        pip install streamlit
+1. Set Up Environment:\n
+    Create a virtual environment.\n
+    Install dependencies using pip:\n
+        pip install Flask\n
+        pip install firebase_admin\n
+        pip install streamlit\n
 2. Firebase Configuration:
     Create the JSON file for your Firebase credentials.
 3. Configure Flask:
