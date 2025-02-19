@@ -1,22 +1,42 @@
 # gamified-credit
 A web-based platform that evaluates financial trustworthiness through AI-driven insights while incentivizing responsible financial behaviors.
 
-Purpose:
+Purpose:Traditional credit scoring systems often penalize financial missteps and fail to reward proactive financial responsibility. Our project reimagines this model by leveraging behavioral psychology—specifically the IKEA Effect and Self-Determination Theory—and gamification principles to create an engaging, positive, and empowering financial experience.
 
 Technologies Used:
+    Backend: Flask
+    Frontend: Streamlit
+    AI/ML: PyTorch
+    Database: Firestore
+    Authentication: Firebase Auth
+
 
 # Dependencies
+Flask (pip install Flask)
+Firebase Admin (pip install firebase_admin)
+Streamlit (pip install streamlit)
+PyTorch (installation details depend on your system; see PyTorch.org)
+Other Python dependencies as listed in requirements.txt
 
 # How to use
-1. In a virtual environment, download flask (pip install Flask)
-2. pip install firebase_admin
-3. pip install streamlit
-4. make the json file for firebase key
-5. Let your machine know where the flask app directory is (export FLASK_APP=*path to the flask_app)
-6. Run Flask (flask run)
-7. In a separate terminal navigate to the directory holding the streamlit app
-8. streamlit run streamlit_app.py
-9. enter an email then open in your browser
+1. Set Up Environment:
+    Create a virtual environment.
+    Install dependencies using pip:
+        pip install Flask
+        pip install firebase_admin
+        pip install streamlit
+2. Firebase Configuration:
+    Create the JSON file for your Firebase credentials.
+3. Configure Flask:
+    Export your Flask app directory:
+        export FLASK_APP=path/to/flask_app
+4. Run the Flask application:
+    flask run
+5 Launch Streamlit:
+    In a separate terminal, navigate to the directory containing your Streamlit app:
+        streamlit run streamlit_app.py
+6. Enter an email when prompted and open the provided URL in your browser.
+
 
 # Features
 
