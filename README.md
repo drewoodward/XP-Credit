@@ -1,7 +1,7 @@
 # gamified-credit
 A web-based platform that evaluates financial trustworthiness through AI-driven insights while incentivizing responsible financial behaviors.
 
-Purpose:Traditional credit scoring systems often penalize financial missteps and fail to reward proactive financial responsibility. Our project reimagines this model by leveraging behavioral psychology—specifically the IKEA Effect and Self-Determination Theory—and gamification principles to create an engaging, positive, and empowering financial experience.
+Purpose: Traditional credit scoring systems often penalize financial missteps and fail to reward proactive financial responsibility. Our project reimagines this model by leveraging behavioral psychology—specifically the IKEA Effect and Self-Determination Theory—and gamification principles to create an engaging, positive, and empowering financial experience.
 
 Technologies Used:
     Backend: Flask
