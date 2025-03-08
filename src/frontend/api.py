@@ -7,23 +7,38 @@ API_URL = "http://127.0.0.1:5000"
 def create_account(username):
     payload = {"username": username}
     response = requests.post(f"{API_URL}/create_account", json=payload)
-    return response.json(), response.status_code
+    try:
+        json_response = response.json()
+    except ValueError:
+        # Return a custom error message along with the raw response text for debugging.
+        json_response = {"error": f"Failed to decode JSON: {response.text}"}
+    return json_response, response.status_code
 
 def update_trust_score(username, new_score):
     payload = {"username": username, "trust_score": new_score}
     response = requests.post(f"{API_URL}/update_trust_score", json=payload)
-    return response.json(), response.status_code
+    try:
+        json_response = response.json()
+    except ValueError:
+        json_response = {"error": f"Failed to decode JSON: {response.text}"}
+    return json_response, response.status_code
 
 def get_credit_score(user_id):
     response = requests.get(f"{API_URL}/credit_score?user_id={user_id}")
     if response.status_code == 200:
-        return response.json().get("credit_score")
+        try:
+            return response.json().get("credit_score")
+        except ValueError:
+            return None
     return None
 
 def get_trust_history(user_id):
     response = requests.get(f"{API_URL}/trust_history?user_id={user_id}")
     if response.status_code == 200:
-        data = response.json()
+        try:
+            data = response.json()
+        except ValueError:
+            return None
         if data:
             df = pd.DataFrame(data)
             if 'date' in df.columns:
@@ -39,7 +54,10 @@ def get_badges(user_id):
     try:
         response = requests.get(f"{API_URL}/badges?user_id={user_id}")
         if response.status_code == 200:
-            return response.json()
+            try:
+                return response.json()  # Expecting a list of badge image URLs/paths
+            except ValueError:
+                return ["badges/badge1.png"]
     except Exception as e:
         # Log error if needed
         pass

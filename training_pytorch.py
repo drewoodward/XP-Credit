@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 # Load dataset
-df = pd.read_csv(r"C:\Users\rrjar\OneDrive\Desktop\MIS4153\financial_model\synthetic_financial_data.csv")
+df = pd.read_csv("data/synthetic_financial_data.csv")
 
 # Select features and target
 features = ["age", "income", "transaction_amount", "credit_score", "debt_to_income_ratio", "savings"]

@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 from faker import Faker
@@ -31,5 +32,11 @@ df = pd.DataFrame(data, columns=[
     "due_date", "payment_made_on_time", "credit_score", "debt_to_income_ratio", "savings", "financial_score"
 ])
 
-df.to_csv("synthetic_financial_data.csv", index=False)
-print("Synthetic data saved to CSV!")
+# Create "data" directory if it doesn't exist
+data_dir = "data"
+os.makedirs(data_dir, exist_ok=True)
+
+# Save the CSV file inside the "data" directory
+csv_path = os.path.join(data_dir, "synthetic_financial_data.csv")
+df.to_csv(csv_path, index=False)
+print(f"Synthetic data saved to CSV at: {csv_path}")

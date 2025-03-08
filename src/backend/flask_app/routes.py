@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from firebase_admin import firestore
+from datetime import datetime, timezone
 
 main = Blueprint('main', __name__)
 
@@ -10,6 +11,78 @@ db = firestore.client()
 def index():
     return jsonify({"message": "Welcome to the AI-Powered Gamified Financial Trust Score API!"})
 
+@main.route('/create_account', methods=['POST'])
+def create_account():
+    """
+    Expects JSON payload: {"username": "unique_username"}
+    Creates a new user document with an initial trust score of 0.
+    """
+    data = request.get_json()
+    username = data.get("username")
+    if not username:
+        return jsonify({"error": "Username is required"}), 400
+
+    user_ref = db.collection("users").document(username)
+    if user_ref.get().exists:
+        return jsonify({"error": "Username already exists"}), 400
+
+    user_ref.set({
+        "username": username,
+        "created_at": datetime.utcnow().isoformat(),
+        "trust_score": 0
+    })
+
+    return jsonify({"message": "Account created", "username": username}), 201
+
+@main.route('/update_trust_score', methods=['POST'])
+def update_trust_score():
+    """
+    Expects JSON payload: {"username": "unique_username", "trust_score": new_score}
+    Updates the user's trust score and appends a new record in the trust_history subcollection.
+    """
+    data = request.get_json()
+    username = data.get("username")
+    trust_score = data.get("trust_score")
+    if not username or trust_score is None:
+        return jsonify({"error": "Username and trust_score are required"}), 400
+
+    user_ref = db.collection("users").document(username)
+    if not user_ref.get().exists:
+        return jsonify({"error": "User not found"}), 404
+
+    # Update the current trust score
+    user_ref.update({"trust_score": trust_score})
+    
+    # Add a new history record with a timestamp
+    history_ref = user_ref.collection("trust_history")
+    record_id = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    history_ref.document(record_id).set({
+        "date": record_id,
+        "trust_score": trust_score
+    })
+
+    return jsonify({"message": "Trust score updated"}), 200
+
+
+@main.route('/credit_score')
+def credit_score():
+    """
+    Expects a query parameter: user_id.
+    Returns the current trust score for the specified user.
+    """
+    user_id = request.args.get("user_id")
+    if not user_id:
+        return jsonify({"error": "Missing user_id parameter"}), 400
+
+    user_ref = db.collection("users").document(user_id)
+    user_snapshot = user_ref.get()
+    if not user_snapshot.exists:
+        return jsonify({"error": "User not found"}), 404
+
+    user_data = user_snapshot.to_dict()
+    trust_score = user_data.get("trust_score", 0)
+    return jsonify({"credit_score": trust_score})
+
 @main.route('/trust_history')
 def trust_history():
     user_id = request.args.get("user_id")
@@ -18,10 +91,8 @@ def trust_history():
 
     # Reference to the user's trust_history subcollection.
     history_ref = db.collection("users").document(user_id).collection("trust_history")
-    # Query all documents in the subcollection.
     docs = history_ref.stream()
 
-    # Build a list of records.
     history_data = []
     for doc in docs:
         history_data.append(doc.to_dict())
@@ -30,3 +101,18 @@ def trust_history():
     history_data.sort(key=lambda x: x["date"])
 
     return jsonify(history_data)
+
+@main.route('/badges')
+def badges():
+    """
+    Dummy endpoint for badges.
+    Expects a query parameter: user_id.
+    Returns a JSON list of badge image paths.
+    """
+    user_id = request.args.get("user_id")
+    if not user_id:
+        return jsonify({"error": "Missing user_id parameter"}), 400
+
+    # For demonstration purposes, return a static list.
+    badge_list = ["badges/badge1.png", "badges/achievement-award.png"]
+    return jsonify(badge_list)
