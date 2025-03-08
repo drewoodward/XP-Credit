@@ -1,0 +1,14 @@
+# Core Dependencies
+scikit-learn
+torch
+faker
+flask
+streamlit
+firebase_admin
+
+# Additional Dependencies Used in the Project
+numpy
+pandas
+requests
+yfinance
+plotly
