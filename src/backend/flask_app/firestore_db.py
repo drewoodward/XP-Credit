@@ -1,14 +1,15 @@
-#sets up firestore and helper functions for data management
-import os
+# sets up firestore and helper functions for data management
 import firebase_admin
 from firebase_admin import credentials, firestore
+import streamlit as st
+import json
 
-# Use an environment variable to reference your service account key securely
-SERVICE_ACCOUNT_PATH = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "/root/gamified_credit/gamified-credit/src/backend/flask_app/gamified-credit-firebase-adminsdk-fbsvc-497ccea0c6.json")
+# Load Firebase credentials from Streamlit Secrets
+firebase_credentials = json.loads(st.secrets["FIREBASE_CREDENTIALS"])
 
-# Initialize the Firebase app if it hasn't been initialized already.
+# Initialize Firebase App if it hasn't been initialized already
 if not firebase_admin._apps:
-    cred = credentials.Certificate(SERVICE_ACCOUNT_PATH)
+    cred = credentials.Certificate(firebase_credentials)
     firebase_admin.initialize_app(cred)
 
 # Get a Firestore client
