@@ -1,13 +1,16 @@
 import streamlit as st
 from api import create_account, get_credit_score
 
+# Application Title Page
+
 def login_signup():
     st.markdown("<div class='header'>Welcome to Gamified Credit</div>", unsafe_allow_html=True)
     st.markdown("<div class='subheader'>Login or Sign Up</div>", unsafe_allow_html=True)
     
     auth_mode = st.radio("Choose an option:", ("Login", "Sign Up"))
     username = st.text_input("Enter your unique username:")
-    password = st.text_input("Enter your password:", type="password")  # Dummy password for demonstration
+    password = st.text_input("Enter your password:", type="password")  # Dummy password for demonstration,,, double check this
+                                                                       # Also in real application we would implement proper pw handling
     
     if st.button("Submit"):
         if not username or not password:
