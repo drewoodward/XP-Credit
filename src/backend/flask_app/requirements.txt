@@ -1,0 +1,12 @@
+scikit-learn
+torch
+faker
+flask
+streamlit
+firebase_admin
+numpy
+pandas
+requests
+yfinance
+plotly
+gunicorn
