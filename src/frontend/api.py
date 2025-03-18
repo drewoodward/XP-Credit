@@ -1,12 +1,19 @@
 import requests
 import pandas as pd
 import base64
+import streamlit as st
 
 API_URL = "https://flask-api-529591304289.us-east4.run.app"
 
 def create_account(username):
     payload = {"username": username}
     response = requests.post(f"{API_URL}/create_account", json=payload)
+
+    #debugging the failed to decode json bs
+    st.write("Response Status:", response.status_code)
+    st.write("Response Text:", response.text)  # This will show if JSON is valid
+    st.write("Response JSON:", response.json() if response.headers.get('Content-Type') == 'application/json' else "Invalid JSON")
+    
     try:
         json_response = response.json()
     except ValueError:
