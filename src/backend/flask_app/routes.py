@@ -1,3 +1,4 @@
+import logging
 from flask import Blueprint, jsonify, request
 from firebase_admin import firestore
 from datetime import datetime, timezone
@@ -15,24 +16,35 @@ def index():
 def create_account():
     """
     Expects JSON payload: {"username": "unique_username"}
-    Creates a new user document with an initial trust score of 0.
+    Creates a new user document with an initial trust score of (to be determined).
     """
-    data = request.get_json()
-    username = data.get("username")
-    if not username:
-        return jsonify({"error": "Username is required"}), 400
+    try:
+        data = request.get_json()
+        logging.debug(f"Received request data: {data}")
 
-    user_ref = db.collection("users").document(username)
-    if user_ref.get().exists:
-        return jsonify({"error": "Username already exists"}), 400
+        if not data or "username" not in data:
+            logging.warning("Invalid request: Missing username")
+            return jsonify({"error": "Username is required"}), 400
 
-    user_ref.set({
-        "username": username,
-        "created_at": datetime.utcnow().isoformat(),
-        "trust_score": 0
-    })
+        username = data["username"].strip()
+        user_ref = db.collection("users").document(username)
 
-    return jsonify({"message": "Account created", "username": username}), 201
+        if user_ref.get().exists:
+            logging.warning("Username already exists")
+            return jsonify({"error": "Username already exists"}), 400
+
+        user_ref.set({
+            "username": username,
+            "created_at": datetime.utcnow().isoformat(),
+            "trust_score": 0
+        })
+
+        logging.info(f"Account created for username: {username}")
+        return jsonify({"message": "Account created", "username": username}), 201
+
+    except Exception as e:
+        logging.error(f"Error in create_account: {str(e)}", exc_info=True)
+        return jsonify({"error": "Internal Server Error"}), 500
 
 @main.route('/update_trust_score', methods=['POST'])
 def update_trust_score():
