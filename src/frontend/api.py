@@ -18,6 +18,7 @@ def create_account(username):
         json_response = response.json()
     except ValueError:
         # Return a custom error message along with the raw response text for debugging.
+        
         json_response = {"error": f"Failed to decode JSON: {response.text}"}
     return json_response, response.status_code
 
