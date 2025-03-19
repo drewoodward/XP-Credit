@@ -5,6 +5,7 @@ faker
 flask
 streamlit
 firebase_admin
+streamlit-navigation-bar
 
 # Additional Dependencies Used in the Project
 numpy
