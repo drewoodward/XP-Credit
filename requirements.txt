@@ -6,6 +6,7 @@ flask
 streamlit
 firebase_admin
 streamlit-navigation-bar
+flask-cors
 
 # Additional Dependencies Used in the Project
 numpy

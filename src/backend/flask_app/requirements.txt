@@ -10,3 +10,4 @@ requests
 yfinance
 plotly
 gunicorn
+flask-cors
