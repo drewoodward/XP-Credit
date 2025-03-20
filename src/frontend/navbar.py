@@ -40,5 +40,6 @@ def show_navbar():
     st.session_state.page = page
 
     # Only one option: Dashboard.
-    if page == "Dashboard":
-        show_dashboard()
+    #for some reason this was showing the dashboard while in the login screen
+    # if page == "Dashboard":
+    #     show_dashboard()
