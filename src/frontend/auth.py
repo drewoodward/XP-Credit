@@ -1,31 +1,26 @@
 import streamlit as st
 from api import create_account, get_credit_score
 
-# Ensure session state variables are initialized
-if "logged_in" not in st.session_state:
-    st.session_state.logged_in = False
-    st.session_state.username = ""
 
 def login_signup():
     if not st.session_state.logged_in:
-        # Display login/signup form only if user is NOT logged in
-        st.markdown("""
-        <style>
-        .centered-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 60vh; /* Adjust this value based on your layout needs */
-            text-align: center;
-        }
-        </style>
-        <div class="centered-container">
-            <h1>XP-Credit</h1>
-            <h2>A web app that evaluates financial trustworthiness through AI-driven insights while incentivizing responsible financial behaviors.</h2>
-        </div>
-        """, unsafe_allow_html=True)
-
+        # Render the header in its own block without an overlay container.
+        st.markdown(
+            """
+            <style>
+            .header-container {
+                text-align: center;
+                padding: 1rem;
+            }
+            </style>
+            <div class="header-container">
+                <h1>XP-Credit</h1>
+                <h2>A web app that evaluates financial trustworthiness through AI-driven insights while incentivizing responsible financial behaviors.</h2>
+            </div>
+            """, unsafe_allow_html=True
+        )
+        
+        # Render the interactive login/signup form separately.
         auth_mode = st.radio("***Choose an option***:", ["Login", "Sign Up"])
         username = st.text_input("Enter your username:")
         password = st.text_input("Enter your password:", type="password")  
@@ -44,7 +39,8 @@ def login_signup():
                     st.session_state.logged_in = True
                     st.session_state.username = username
                     st.success("Logged in successfully!")
-                    st.experimental_rerun()  # Refresh UI after login
+                    #commented out for debugging purposes
+                    #st.experimental_rerun()  # Refresh UI after login
 
             elif auth_mode == "Sign Up":
                 result, status = create_account(username)
@@ -56,10 +52,12 @@ def login_signup():
                 else:
                     st.error(result.get("error", "Sign up failed."))
     else:
-        # this block of code is being executed for some reason or maybe its the showDashboard()
+        # Display logged-in view.
         st.write(f"Welcome, {st.session_state.username}!")
-
         if st.button("Log Out"):
             st.session_state.logged_in = False
             st.session_state.username = ""
             st.experimental_rerun()  # Refresh UI after logout
+
+if __name__ == "__main__":
+    login_signup()
