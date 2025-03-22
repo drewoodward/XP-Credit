@@ -1,6 +1,6 @@
 import streamlit as st
 from dashboard import show_dashboard
-from profile import show_profile
+from profile_page import show_profile
 from education import show_education
 from community import show_community
 
