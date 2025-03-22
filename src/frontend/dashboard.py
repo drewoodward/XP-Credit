@@ -3,17 +3,29 @@ import random
 import requests
 import base64
 import pandas as pd
+from xp import display_xp_bar
 from api import (
     get_credit_score, 
     get_trust_history, 
     update_trust_score, 
     get_badges, 
-    get_image_as_base64
+    get_image_as_base64,
+    get_user_xp
 )
 
 def show_dashboard():
     st.markdown(f"<div class='header'>Welcome, {st.session_state.username}!</div>", unsafe_allow_html=True)
     
+    # Display xp
+    # current_xp =  get_user_xp(st.session_state.username) # Example: the user currently has 120 XP
+    # if current_xp is None:
+    #     current_xp = 0
+    current_xp = 120    # Hard-coded amount to showcase the style
+    xp_next_level = 200  # Example: the next level is reached at 200 XP
+    
+    st.markdown("<div class='subheader'>Experience Points (XP)</div>", unsafe_allow_html=True)
+    display_xp_bar(current_xp, xp_next_level)
+
     # Display current trust score
     score = get_credit_score(st.session_state.username)
     if score is not None:
