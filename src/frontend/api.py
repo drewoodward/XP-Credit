@@ -3,8 +3,8 @@ import pandas as pd
 import base64
 import streamlit as st
 
-API_URL = "https://flask-api-529591304289.us-east4.run.app"
-#API_URL = "http://127.0.0.1:5000"
+#API_URL = "https://flask-api-529591304289.us-east4.run.app"
+API_URL = "http://127.0.0.1:5000"
 
 def create_account(username):
     payload = {"username": username}
@@ -31,6 +31,25 @@ def update_trust_score(username, new_score):
     except ValueError:
         json_response = {"error": f"Failed to decode JSON: {response.text}"}
     return json_response, response.status_code
+
+def get_user_xp(username):
+    response = requests.get(f"{API_URL}/get_user_xp?user_id={username}")
+    if response.status_code == 200:
+        try:
+            return response.json().get("xp")
+        except ValueError:
+            return None
+    return None
+
+def update_xp(username, xp_delta):
+    payload = {"username": username, "xp_delta": xp_delta}
+    response = requests.post(f"{API_URL}/update_xp", json=payload)
+    try:
+        json_response = response.json()
+    except ValueError:
+        json_response = {"error": f"Failed to decode JSON: {response.text}"}
+    return json_response, response.status_code
+
 
 def get_credit_score(user_id):
     response = requests.get(f"{API_URL}/credit_score?user_id={user_id}")

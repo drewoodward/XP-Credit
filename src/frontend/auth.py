@@ -1,5 +1,6 @@
 import streamlit as st
 from api import create_account, get_credit_score
+from navbar import show_navbar
 
 
 def login_signup():
@@ -26,6 +27,10 @@ def login_signup():
         password = st.text_input("Enter your password:", type="password")  
 
         if st.button("Submit"):
+            
+            # authorized switch
+            authorized = False
+
             if not username or not password:
                 st.error("Please enter both username and password.")
                 return
@@ -39,8 +44,8 @@ def login_signup():
                     st.session_state.logged_in = True
                     st.session_state.username = username
                     st.success("Logged in successfully!")
-                    #commented out for debugging purposes
-                    #st.experimental_rerun()  # Refresh UI after login
+                    authorized = True
+                
 
             elif auth_mode == "Sign Up":
                 result, status = create_account(username)
@@ -48,16 +53,21 @@ def login_signup():
                     st.session_state.logged_in = True
                     st.session_state.username = username
                     st.success("Account created successfully! You are now logged in.")
-                    st.experimental_rerun()  # Refresh UI after signup
+                    authorized = True
                 else:
                     st.error(result.get("error", "Sign up failed."))
-    else:
+            
+            if(authorized == True):
+                #clear the page
+                st.rerun()
+                show_navbar()
+    # else:
         # Display logged-in view.
-        st.write(f"Welcome, {st.session_state.username}!")
-        if st.button("Log Out"):
-            st.session_state.logged_in = False
-            st.session_state.username = ""
-            st.experimental_rerun()  # Refresh UI after logout
+        # st.write(f"Welcome, {st.session_state.username}!")
+        # if st.button("Log Out"):
+        #     st.session_state.logged_in = False
+        #     st.session_state.username = ""
+        #     st.experimental_rerun()  # Refresh UI after logout
 
 if __name__ == "__main__":
     login_signup()

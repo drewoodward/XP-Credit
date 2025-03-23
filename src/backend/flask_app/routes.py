@@ -35,8 +35,9 @@ def create_account():
 
         user_ref.set({
             "username": username,
-            "created_at": datetime.utcnow().isoformat(),
-            "trust_score": 0
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "trust_score": 0,
+            "xp": 0
         })
 
         logging.info(f"Account created for username: {username}")
@@ -75,6 +76,43 @@ def update_trust_score():
 
     return jsonify({"message": "Trust score updated"}), 200
 
+@main.route('/get_xp')
+def get_xp():
+    user_id = request.args.get("user_id")
+    if not user_id:
+        return jsonify({"error": "Missing user_id parameter"}), 400
+    
+    user_ref = db.collection("users").document(user_id)
+    user_snapshot = user_ref.get()
+    if not user_snapshot.exists:
+        return jsonify({"error": "User not found"}), 404
+    
+    user_data = user_snapshot.to_dict()
+    xp = user_data.get("xp", 0)
+    return jsonify({"xp": xp})
+
+@main.route('/update_xp', methods=['POST'])
+def update_xp():
+    """
+    Expects JSON payload: {"username": "unique_username", "xp_delta": xp_increase}
+    Adds xp_delta to the user's existing XP.
+    """
+    data = request.get_json()
+    username = data.get("username")
+    xp_delta = data.get("xp_delta")
+    if not username or xp_delta is None:
+        return jsonify({"error": "Username and xp_delta are required"}), 400
+    
+    user_ref = db.collection("users").document(username)
+    user_snapshot = user_ref.get()
+    if not user_snapshot.exists:
+        return jsonify({"error": "User not found"}), 404
+    
+    current_xp = user_snapshot.to_dict().get("xp", 0)
+    new_xp = current_xp + xp_delta
+    user_ref.update({"xp": new_xp})
+    
+    return jsonify({"message": "XP updated", "new_xp": new_xp}), 200
 
 @main.route('/credit_score')
 def credit_score():
