@@ -25,6 +25,5 @@ env/
 .DS_Store
 Thumbs.db
 
-# Files too large for git
-xpc/lib/python3.12/site-packages/pyarrow/
-xpc/lib/python3.12/site-packages/torch/
+# Files that are too large:
+*.dylib

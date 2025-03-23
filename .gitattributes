@@ -1,0 +1,2 @@
+xpc/lib/python3.12/site-packages/pyarrow/libarrow.1900.dylib filter=lfs diff=lfs merge=lfs -text
+xpc/lib/python3.12/site-packages/torch/lib/libtorch_cpu.dylib filter=lfs diff=lfs merge=lfs -text

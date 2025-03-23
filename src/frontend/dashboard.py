@@ -12,31 +12,45 @@ from api import (
     get_image_as_base64,
     get_user_xp
 )
+import pathlib
+
+
+# Function to load CSS from the 'assets' folder
+def load_css(file_path):
+    with open(file_path) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+
+# Load the external CSS
+css_path = pathlib.Path("assets/styles.css")
+load_css(css_path)
+
 
 def show_dashboard():
-    st.markdown(f"<div class='header'>Welcome, {st.session_state.username}!</div>", unsafe_allow_html=True)
+    #old version without streamlit --upgrade
+    #st.markdown(f"<div class='header'>Welcome, {st.session_state.username}!</div>", unsafe_allow_html=True)
+    st.title("✨ Welcome, " + st.session_state.username + "! ✨")
+    
     
     # Display xp
     # current_xp =  get_user_xp(st.session_state.username) # Example: the user currently has 120 XP
     # if current_xp is None:
     #     current_xp = 0
-    current_xp = 120    # Hard-coded amount to showcase the style
+    current_xp = 120    # Hard-coded amount to
     xp_next_level = 200  # Example: the next level is reached at 200 XP
     
-    st.markdown("<div class='subheader'>Experience Points (XP)</div>", unsafe_allow_html=True)
     display_xp_bar(current_xp, xp_next_level)
 
     # Display current trust score
     score = get_credit_score(st.session_state.username)
     if score is not None:
-        st.metric("Current Trust Score", score)
+        st.header("Current Trust Score")
+        st.subheader(score)
     else:
         st.write("Error fetching trust score.")
     
     # Simulated bank linking section
-    st.markdown("<div class='subheader'>Link Your Bank Account</div>", unsafe_allow_html=True)
-    st.write("Click the button below to log into your bank via Plaid (simulation).")
-    if st.button("Link Bank Account"):
+    if st.button("Link Bank Account", key="pulse"): 
         st.success("Bank account linked successfully!")
         new_trust_score = random.randint(600, 800)
         _, status = update_trust_score(st.session_state.username, new_trust_score)
@@ -46,7 +60,7 @@ def show_dashboard():
             st.error("Failed to update trust score.")
     
     # Display historical trust score data and graph with a date range filter
-    st.markdown("<div class='subheader'>Trust Score History (Past Year)</div>", unsafe_allow_html=True)
+    st.subheader("Trust Score History")
     df_history = get_trust_history(st.session_state.username)
     if df_history is not None and not df_history.empty:
         st.write("Historical Data Preview:")
@@ -93,7 +107,7 @@ def show_dashboard():
     """, unsafe_allow_html=True)
     
     # Display badges for Saving Streak
-    st.markdown("<div class='subheader'>Saving Streak, +5 Trust Score Points!</div>", unsafe_allow_html=True)
+    #st.markdown("<div class='subheader'>Saving Streak, +5 Trust Score Points!</div>", unsafe_allow_html=True)
     badges = get_badges(st.session_state.username)
     if badges:
         cols = st.columns(len(badges))
@@ -105,7 +119,7 @@ def show_dashboard():
         st.write("No badges earned yet.")
     
     # Display badges for Course Completed
-    st.markdown("<div class='subheader'>Course Completed, +5 Trust Score Points!</div>", unsafe_allow_html=True)
+    #st.markdown("<div class='subheader'>Course Completed, +5 Trust Score Points!</div>", unsafe_allow_html=True)
     if badges:
         cols = st.columns(len(badges))
         for idx, col in enumerate(cols):
