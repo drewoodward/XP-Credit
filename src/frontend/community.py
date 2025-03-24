@@ -1,5 +1,5 @@
 import streamlit as st
-from xp import display_xp_bar
+from progress import display_xp_bar
 
 def show_community():
     st.header("Community")
