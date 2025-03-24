@@ -3,6 +3,7 @@ import random
 import requests
 import base64
 import pandas as pd
+import os
 from xp import display_xp_bar
 from api import (
     get_credit_score, 
@@ -22,7 +23,7 @@ def load_css(file_path):
 
 
 # Load the external CSS
-css_path = pathlib.Path("assets/styles.css")
+css_path = os.path.join("frontend","assets","styles.css")
 load_css(css_path)
 
 
