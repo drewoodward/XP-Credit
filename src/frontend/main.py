@@ -1,5 +1,5 @@
 import streamlit as st
-from auth import login_signup
+from src.frontend.auth import login_signup
 from navbar import show_navbar
 
 # Inject the background CSS at the top of the app.
