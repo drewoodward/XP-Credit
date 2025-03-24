@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_cors import CORS  # Import CORS
 from flask_app.firestore_listener import start_listener_in_background  # Import Firestore listener
+import logging
 
 def create_app():
     app = Flask(__name__)
@@ -17,3 +18,9 @@ def create_app():
     app.register_blueprint(main)
 
     return app
+
+logging.basicConfig(level=logging.DEBUG)
+app = create_app()
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)
