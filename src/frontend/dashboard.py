@@ -24,6 +24,7 @@ def load_css(file_path):
 
 # Load the external CSS
 css_path = os.path.join("frontend","assets","styles.css")
+print(os.getcwd())
 load_css(css_path)
 
 
