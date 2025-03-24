@@ -31,6 +31,7 @@ def show_dashboard():
     #st.markdown(f"<div class='header'>Welcome, {st.session_state.username}!</div>", unsafe_allow_html=True)
     st.title("✨ Welcome, " + st.session_state.username + "! ✨")
     
+    st.write(" \n")
     
     # Display xp
     # current_xp =  get_user_xp(st.session_state.username) # Example: the user currently has 120 XP
@@ -46,6 +47,7 @@ def show_dashboard():
     if score is not None:
         st.header("Current Trust Score")
         st.subheader(score)
+        st.write(" \n") 
     else:
         st.write("Error fetching trust score.")
     
@@ -91,40 +93,6 @@ def show_dashboard():
     else:
         st.write("No historical trust score data available.")
     
-    # Display badges header with achievement award image
-    achievement_image_path = "badges/achievement-award.png"
-    try:
-        encoded_image = get_image_as_base64(achievement_image_path)
-    except Exception as e:
-        st.error(f"Error loading achievement image: {e}")
-        encoded_image = ""
     
-    image_html = f'<img src="data:image/png;base64,{encoded_image}" style="height: 50px; margin-left: 10px;">'
-    st.markdown(f"""
-        <div class='subheader' style='display: flex; align-items: center; justify-content: center;'>
-            Your Badges {image_html}
-        </div>
-    """, unsafe_allow_html=True)
     
-    # Display badges for Saving Streak
-    #st.markdown("<div class='subheader'>Saving Streak, +5 Trust Score Points!</div>", unsafe_allow_html=True)
-    badges = get_badges(st.session_state.username)
-    if badges:
-        cols = st.columns(len(badges))
-        for idx, col in enumerate(cols):
-            with col:
-                st.image(badges[idx], width=100)
-                st.markdown("<div style='color:#2980B9; font-size:1em; font-weight:bold;'>Saving Streak, +5 Trust Score Points!</div>", unsafe_allow_html=True)
-    else:
-        st.write("No badges earned yet.")
     
-    # Display badges for Course Completed
-    #st.markdown("<div class='subheader'>Course Completed, +5 Trust Score Points!</div>", unsafe_allow_html=True)
-    if badges:
-        cols = st.columns(len(badges))
-        for idx, col in enumerate(cols):
-            with col:
-                st.image(badges[idx], width=100)
-                st.markdown("<div style='color:#2980B9; font-size:1em; font-weight:bold;'>Course Completed, +5 Trust Score Points!</div>", unsafe_allow_html=True)
-    else:
-        st.write("No course completion badges earned yet.")
