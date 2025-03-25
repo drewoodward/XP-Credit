@@ -85,7 +85,7 @@ def get_badges(user_id):
             try:
                 return response.json()  # Expecting a list of badge image URLs/paths
             except ValueError:
-                return ["badges/badge1.png"]
+                return ["src/frontend/badges/badge1.png"]    # hardcoded for demo
     except Exception as e:
         # Log error if needed
         pass
