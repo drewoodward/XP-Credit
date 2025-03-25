@@ -95,6 +95,3 @@ def show_dashboard():
     else:
         st.write("No historical trust score data available.")
     
-    
-    
-    

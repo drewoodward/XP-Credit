@@ -34,7 +34,7 @@ def show_profile():
     
     # Display badges for Saving Streak
     #st.markdown("<div class='subheader'>Saving Streak, +5 Trust Score Points!</div>", unsafe_allow_html=True)
-    badges = get_badges(st.session_state.username)
+    badges = get_badges()
     if badges:
         cols = st.columns(len(badges))
         for idx, col in enumerate(cols):

@@ -71,6 +71,6 @@ def show_education():
         if score == total:
             st.success(f"Congratulations! You passed the quiz with a score of {score}/{total} and earned a badge!")
             # Optionally, display a badge image:
-            # st.image("badges/education_badge.png", width=100)
+            # st.image("badges/badge1.png", width=100)
         else:
             st.error(f"You scored {score}/{total}. Some answers are incorrect. Please try again!")
