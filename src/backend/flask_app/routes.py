@@ -159,7 +159,6 @@ def badges():
     Expects a query parameter: user_id.
     Returns a JSON list of badge image paths.
     """
-    print("I am in badges route")
     user_id = request.args.get("user_id")
     if not user_id:
         return jsonify({"error": "Missing user_id parameter"}), 400
