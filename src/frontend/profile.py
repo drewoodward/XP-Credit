@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import os
 from datetime import datetime
 from api import get_credit_score, get_badges, get_trust_history, get_image_as_base64
 
@@ -34,7 +35,16 @@ def show_profile():
     
     # Display badges for Saving Streak
     #st.markdown("<div class='subheader'>Saving Streak, +5 Trust Score Points!</div>", unsafe_allow_html=True)
-    badges = get_badges()
+        
+                        ####Trying to find the badges####
+
+    # Load the external Badges
+    
+    badges_path = os.path.join(os.getcwd(), "src", "frontend","badges","badge1.png")
+    print("Current file: ", os.getcwd(), "src", "frontend","badges","badge1.png")    # debugging
+    
+
+    badges = get_badges(st.session_state.username)
     if badges:
         cols = st.columns(len(badges))
         for idx, col in enumerate(cols):
