@@ -3,8 +3,8 @@ import pandas as pd
 import base64
 import streamlit as st
 
-#API_URL = "https://flask-api-529591304289.us-east4.run.app"
-API_URL = "http://127.0.0.1:5000"
+#API_URL = "https://flask-api-529591304289.us-east4.run.app"    # GCP
+API_URL = "http://127.0.0.1:5000"    # local
 
 def create_account(username):
     payload = {"username": username}

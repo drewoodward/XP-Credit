@@ -4,7 +4,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 
 # Path to your service account key file
-SERVICE_ACCOUNT_PATH = "src/backend/flask_app/gamified-credit-firebase-adminsdk-fbsvc-497ccea0c6.json"
+SERVICE_ACCOUNT_PATH = "./gamified-credit-firebase-adminsdk-fbsvc-497ccea0c6.json"
 
 # Initialize the Firebase app (if not already initialized)
 if not firebase_admin._apps:

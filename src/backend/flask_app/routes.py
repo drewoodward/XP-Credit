@@ -164,5 +164,5 @@ def badges():
         return jsonify({"error": "Missing user_id parameter"}), 400
 
     # For demonstration purposes, return a static list.
-    badge_list = ["badges/badge1.png", "badges/achievement-award.png"]
+    badge_list = ["../frontend/badges/badge1.png", "../frontend/badges/achievement-award.png"]
     return jsonify(badge_list)
