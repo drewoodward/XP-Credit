@@ -13,18 +13,18 @@ def show_profile():
     
     # Display avatar.
     # Update the path below to point to your actual avatar image if available.
-    avatar_path = "avatars/default.png"
-    try:
-        avatar_image = get_image_as_base64(avatar_path)
-        avatar_html = f'''
-            <div style="text-align: center;">
-                <img src="data:image/png;base64,{avatar_image}" 
-                     style="height: 100px; width: 100px; border-radius: 50%;">
-            </div>
-        '''
-        st.markdown(avatar_html, unsafe_allow_html=True)
-    except Exception as e:
-        st.error("Error loading avatar image.")
+    # avatar_path = "avatars/default.png"
+    # try:
+    #     avatar_image = get_image_as_base64(avatar_path)
+    #     avatar_html = f'''
+    #         <div style="text-align: center;">
+    #             <img src="data:image/png;base64,{avatar_image}" 
+    #                  style="height: 100px; width: 100px; border-radius: 50%;">
+    #         </div>
+    #     '''
+    #     st.markdown(avatar_html, unsafe_allow_html=True)
+    # except Exception as e:
+    #     st.error("Error loading avatar image.")
     
     # Display current trust score.
     trust_score = get_credit_score(username)
@@ -40,21 +40,17 @@ def show_profile():
 
     # Load the external Badges
     
-    badges_path = os.path.join(os.getcwd(), "src", "frontend","badges","badge1.png")
-    print("Current file: ", os.getcwd(), "src", "frontend","badges","badge1.png")    # debugging
+    # badges_path = os.path.join(os.getcwd(), "src", "frontend","badges","badge1.png")
+    # print("Current file: ", os.path.join(os.getcwd(), "src", "frontend","badges","badge1.png"))    # debugging
     
+                        ### Badge Section ###
 
     badges = get_badges(st.session_state.username)
-    if badges:
-        cols = st.columns(len(badges))
-        for idx, col in enumerate(cols):
-            with col:
-                st.image(badges[idx], width=100)
-                st.markdown("<div style='color:#2980B9; font-size:1em; font-weight:bold;'>Saving Streak, +5 XP!</div>", unsafe_allow_html=True)
-    else:
-        st.write("No badges earned yet.")
+    print("Badges")
+    print(badges)
+
     # Display badges header with achievement award image
-    achievement_image_path = "badges/achievement-award.png"
+    achievement_image_path = "src/frontend/badges/achievement-award.png"
     try:
         encoded_image = get_image_as_base64(achievement_image_path)
     except Exception as e:
@@ -67,6 +63,15 @@ def show_profile():
             Your Badges {image_html}
         </div>
     """, unsafe_allow_html=True)
+
+    if badges:
+        cols = st.columns(len(badges))
+        for idx, col in enumerate(cols):
+            with col:
+                st.image(badges[idx], width=100)
+                st.markdown("<div style='color:#2980B9; font-size:1em; font-weight:bold;'>Saving Streak, +5 XP!</div>", unsafe_allow_html=True)
+    else:
+        st.write("No badges earned yet.")
     # Display badges for Course Completed
     #st.markdown("<div class='subheader'>Course Completed, +5 Trust Score Points!</div>", unsafe_allow_html=True)
     if badges:

@@ -17,6 +17,8 @@ def main():
     if "logged_in" not in st.session_state:
         st.session_state["logged_in"] = False
 
+    st.logo("src/frontend/assets/X.png", size="large")
+
     # Route the user based on login status.
     if st.session_state["logged_in"]:
         show_navbar()  # Show the navigation bar and dashboard for logged-in users.
