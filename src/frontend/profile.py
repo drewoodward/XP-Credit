@@ -40,8 +40,8 @@ def show_profile():
 
     # Load the external Badges
     
-    # badges_path = os.path.join(os.getcwd(), "src", "frontend","badges","badge1.png")
-    # print("Current file: ", os.path.join(os.getcwd(), "src", "frontend","badges","badge1.png"))    # debugging
+    badges_path = os.path.join(os.getcwd(), "src", "frontend","badges","badge1.png")
+    print("Current file: ", os.path.join(os.getcwd(), "src", "frontend","badges","badge1.png"))    # debugging
     
                         ### Badge Section ###
 
