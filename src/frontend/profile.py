@@ -69,7 +69,16 @@ def show_profile():
         for idx, col in enumerate(cols):
             with col:
                 st.image(badges[idx], width=100)
-                st.markdown("<div style='color:#2980B9; font-size:1em; font-weight:bold;'>Saving Streak, +5 XP!</div>", unsafe_allow_html=True)
+                if idx == 0:
+                    st.markdown(
+                        "<div style='color:#2980B9; font-size:1em; font-weight:bold;'>Weekly Challenge, +5 XP!</div>", 
+                        unsafe_allow_html=True
+                    )
+                elif idx == 1:
+                    st.markdown(
+                        "<div style='color:#2980B9; font-size:1em; font-weight:bold;'>Debt Destroyer, +10 XP!</div>", 
+                        unsafe_allow_html=True
+                    )
     else:
         st.write("No badges earned yet.")
     # Display badges for Course Completed
@@ -79,10 +88,21 @@ def show_profile():
         for idx, col in enumerate(cols):
             with col:
                 st.image(badges[idx], width=100)
-                st.markdown("<div style='color:#2980B9; font-size:1em; font-weight:bold;'>Course Completed, +5 Trust Score Points!</div>", unsafe_allow_html=True)
+                if idx == 0:
+                    st.markdown(
+                        "<div style='color:#2980B9; font-size:1em; font-weight:bold;'>Course Completed, +5 XP!</div>", 
+                        unsafe_allow_html=True
+                    )
+                elif idx == 1:
+                    st.markdown(
+                        "<div style='color:#2980B9; font-size:1em; font-weight:bold;'>Savings Streak, +5 XP!</div>", 
+                        unsafe_allow_html=True
+                    )
     else:
         st.write("No course completion badges earned yet.")
     
+
+
     # Display last activity (using trust history).
     st.subheader("Last Activity")
     df_history = get_trust_history(username)
