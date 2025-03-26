@@ -63,6 +63,8 @@ def show_dashboard():
         else:
             st.error("Failed to update trust score.")
     
+                #### Graphs #####
+
     # Display historical trust score data and graph with a date range filter
     st.subheader("Trust Score History")
     df_history = get_trust_history(st.session_state.username)

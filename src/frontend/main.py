@@ -1,6 +1,7 @@
 import streamlit as st
 from auth import login_signup
 from navbar import show_navbar
+import os
 
 # Inject the background CSS at the top of the app.
 main_background = """
@@ -17,7 +18,11 @@ def main():
     if "logged_in" not in st.session_state:
         st.session_state["logged_in"] = False
 
-    st.logo("assets/X.png", size="large")
+        
+    st.logo("src/frontend/assets/X.png", size="large")
+    logo_path = os.path.join(os.getcwd(), "src", "frontend","assets","X.png")
+    print("Current file: ", os.path.join(os.getcwd(), "src", "frontend","assets","X.png"))
+
 
     # Route the user based on login status.
     if st.session_state["logged_in"]:
