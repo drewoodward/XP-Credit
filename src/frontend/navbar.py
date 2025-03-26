@@ -6,13 +6,13 @@ from community import show_community
 
 def show_navbar():
     # Sidebar navigation using a radio button for page selection.
-    page = st.sidebar.radio("Navigate", ["Dashboard", "Profile", "Education", "Community"])
+    button = st.sidebar.radio("Navigate", ["Dashboard", "Profile", "Education", "Community"])
     
-    if page == "Dashboard":
+    if button == "Dashboard":
         show_dashboard()
-    elif page == "Profile":
+    elif button == "Profile":
         show_profile()
-    elif page == "Education":
+    elif button == "Education":
         show_education()
-    elif page == "Community":
+    elif button == "Community":
         show_community()
