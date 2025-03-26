@@ -159,10 +159,11 @@ def badges():
     Expects a query parameter: user_id.
     Returns a JSON list of badge image paths.
     """
+    print("I am in badges route")
     user_id = request.args.get("user_id")
     if not user_id:
         return jsonify({"error": "Missing user_id parameter"}), 400
 
     # For demonstration purposes, return a static list.
-    badge_list = ["badges/badge1.png", "badges/achievement-award.png"]
+    badge_list = ["src/frontend/badges/badge1.png", "src/frontend/badges/achievement-award.png"]
     return jsonify(badge_list)
