@@ -18,9 +18,11 @@ def main():
     if "logged_in" not in st.session_state:
         st.session_state["logged_in"] = False
 
+        
     st.logo("src/frontend/assets/X.png", size="large")
     logo_path = os.path.join(os.getcwd(), "src", "frontend","assets","X.png")
     print("Current file: ", os.path.join(os.getcwd(), "src", "frontend","assets","X.png"))
+
 
     # Route the user based on login status.
     if st.session_state["logged_in"]:
